@@ -1,8 +1,8 @@
 print "Please enter the name of your singleton"
 name = raw_input('-->').capitalize()
 
-header = open(name + ".h", 'w')
-implementation = open(name + ".m", 'w')
+header = ''
+implementation = ''
 
 variables = []
 
@@ -21,40 +21,46 @@ while True:
         variables.append((var_type, var_name))
 
 #Header file
-header.write("#import <Foundation/Foundation.h>\n\n")
-header.write("@interface " + name + " : NSObject\n\n")
+header += "#import <Foundation/Foundation.h>\n\n"
+header += "@interface " + name + " : NSObject\n\n"
 
 for var in variables:
     if "*" in var[0]:
-        header.write("@property (nonatomic, strong) " + var[0] + " " + var[1] + ";\n")
+        header += "@property (nonatomic, strong) " + var[0] + " " + var[1] + ";\n"
     else:
-        header.write("@property " + var[0] + " " + var[1] + ";\n")
+        header += "@property " + var[0] + " " + var[1] + ";\n"
 
-header.write("\n+(" + name + " *)sharedInstance;\n\n")
+header += "\n+(" + name + " *)sharedInstance;\n\n"
 
 for var in variables:
-    header.write("+(" + var[0] + ")" + "get" + var[1].capitalize() + ";\n")
-    header.write("+(void)set" + var[1].capitalize() + ":(" + var[0] + ")" + var[1] + ";\n")
+    header += "+(" + var[0] + ")" + "get" + var[1].capitalize() + ";\n"
+    header += "+(void)set" + var[1].capitalize() + ":(" + var[0] + ")" + var[1] + ";\n"
 
-header.write("\n@end")
-header.close()
+header += "\n@end"
 
 #Implementation file
-implementation.write("#import \"" + name + ".h\"\n\n")
-implementation.write("@implementation " + name + "\n\n")
-implementation.write("static " + name + " *_" + name.lower() + ";\n\n")
-implementation.write("+(" + name + " *)sharedInstance\n{\n")
-implementation.write("\tstatic dispatch_once_t _singletonPredicate;\n")
-implementation.write("\t\tdispatch_once(&_singletonPredicate), ^ {\n")
-implementation.write("\t\t\t_" + name.lower() + " = [[self alloc] init];\n")
-implementation.write("\t\t});\n")
-implementation.write("\treturn _" + name.lower() + ";\n}\n\n")
+implementation += "#import \"" + name + ".h\"\n\n"
+implementation += "@implementation " + name + "\n\n"
+implementation += "static " + name + " *_" + name.lower() + ";\n\n"
+implementation += "+(" + name + " *)sharedInstance\n{\n"
+implementation += "\tstatic dispatch_once_t _singletonPredicate;\n"
+implementation += "\t\tdispatch_once(&_singletonPredicate, ^ {\n"
+implementation += "\t\t\t_" + name.lower() + " = [[self alloc] init];\n"
+implementation += "\t\t});\n"
+implementation += "\treturn _" + name.lower() + ";\n}\n\n"
 
 for var in variables:
-    implementation.write("+(" + var[0] + ")get" + var[1].capitalize() + "\n{\n")
-    implementation.write("\treturn [[" + name + " sharedInstance] " + var[1] + "];\n}\n\n")
-    implementation.write("+(void)set" + var[1].capitalize() + ":(" + var[0] + ")" + var[1] + "\n{\n")
-    implementation.write("\t[[" + name + " sharedInstance] set" + var[1].capitalize() + ":" + var[1] + "];\n}\n\n")
+    implementation += "+(" + var[0] + ")get" + var[1].capitalize() + "\n{\n"
+    implementation += "\treturn [[" + name + " sharedInstance] " + var[1] + "];\n}\n\n"
+    implementation += "+(void)set" + var[1].capitalize() + ":(" + var[0] + ")" + var[1] + "\n{\n"
+    implementation += "\t[[" + name + " sharedInstance] set" + var[1].capitalize() + ":" + var[1] + "];\n}\n\n"
 
-implementation.write("@end\n")
-implementation.close()
+implementation += "@end\n"
+
+header_file = open(name + ".h", 'w')
+header_file.write(header)
+header_file.close()
+
+implementation_file = open(name + ".m", 'w')
+implementation_file.write(implementation)
+implementation_file.close()
