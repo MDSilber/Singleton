@@ -3,6 +3,9 @@ import readline
 def capitalize_first_letter(s):
     return s[0].upper() + s[1:]
 
+def lower_case_first_letter(s):
+    return s[0].lower() + s[1:]
+
 print "Please enter the name of your singleton"
 name = capitalize_first_letter(raw_input('-->'))
 
@@ -46,7 +49,7 @@ header += "\n@end"
 #Implementation file
 implementation += "#import \"" + name + ".h\"\n\n"
 implementation += "@implementation " + name + "\n\n"
-implementation += "static " + name + " *_" + name.lower() + ";\n\n"
+implementation += "static " + name + " *_" + lower_case_first_letter(name) + ";\n\n"
 implementation += "+(" + name + " *)sharedInstance\n{\n"
 implementation += "\tstatic dispatch_once_t _singletonPredicate;\n"
 implementation += "\t\tdispatch_once(&_singletonPredicate, ^ {\n"
