@@ -1,5 +1,10 @@
+import readline
+
+def capitalize_first_letter(s):
+    return s[0].upper() + s[1:]
+
 print "Please enter the name of your singleton"
-name = raw_input('-->').capitalize()
+name = capitalize_first_letter(raw_input('-->'))
 
 header = ''
 implementation = ''
@@ -33,8 +38,8 @@ for var in variables:
 header += "\n+(" + name + " *)sharedInstance;\n\n"
 
 for var in variables:
-    header += "+(" + var[0] + ")" + "get" + var[1].capitalize() + ";\n"
-    header += "+(void)set" + var[1].capitalize() + ":(" + var[0] + ")" + var[1] + ";\n"
+    header += "+(" + var[0] + ")" + "get" + capitalize_first_letter(var[1]) + ";\n"
+    header += "+(void)set" + capitalize_first_letter(var[1]) + ":(" + var[0] + ")" + var[1] + ";\n"
 
 header += "\n@end"
 
@@ -50,10 +55,10 @@ implementation += "\t\t});\n"
 implementation += "\treturn _" + name.lower() + ";\n}\n\n"
 
 for var in variables:
-    implementation += "+(" + var[0] + ")get" + var[1].capitalize() + "\n{\n"
+    implementation += "+(" + var[0] + ")get" + capitalize_first_letter(var[1]) + "\n{\n"
     implementation += "\treturn [[" + name + " sharedInstance] " + var[1] + "];\n}\n\n"
-    implementation += "+(void)set" + var[1].capitalize() + ":(" + var[0] + ")" + var[1] + "\n{\n"
-    implementation += "\t[[" + name + " sharedInstance] set" + var[1].capitalize() + ":" + var[1] + "];\n}\n\n"
+    implementation += "+(void)set" + capitalize_first_letter(var[1]) + ":(" + var[0] + ")" + var[1] + "\n{\n"
+    implementation += "\t[[" + name + " sharedInstance] set" + capitalize_first_letter(var[1]) + ":" + var[1] + "];\n}\n\n"
 
 implementation += "@end\n"
 
