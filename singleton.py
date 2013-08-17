@@ -9,27 +9,43 @@ def lower_case_first_letter(s):
 print "Please enter the name of your singleton"
 name = capitalize_first_letter(raw_input('-->'))
 
+imports = []
 header = ''
 implementation = ''
 
 variables = []
 
-print "Input instance variables. When finished, enter a blank line"
+#Get imports
+print "Input files you wish to import"
+while True:
+    an_import = raw_input('-->')
+    if an__import = '':
+        break
+    else:
+        imports.append(public_import)
 
 #Get variables
+print "Input instance variables. When finished, enter a blank line"
+
 while True:
     print "Input type of instance variable"
     var_type = raw_input('-->')
+    if var_type == '':
+        break
+
     print "Input name of instance variable"
     var_name = raw_input('-->')
 
-    if var_type == '' or var_name == '':
+    if var_name == '':
         break
     else:
         variables.append((var_type, var_name))
 
 #Header file
 header += "#import <Foundation/Foundation.h>\n\n"
+for file_name in imports:
+    header += "#import \"" + file_name + "\""
+
 header += "@interface " + name + " : NSObject\n\n"
 
 for var in variables:
