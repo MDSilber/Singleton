@@ -19,10 +19,10 @@ variables = []
 print "Input files you wish to import"
 while True:
     an_import = raw_input('-->')
-    if an__import = '':
+    if an_import == '':
         break
     else:
-        imports.append(public_import)
+        imports.append(an_import)
 
 #Get variables
 print "Input instance variables. When finished, enter a blank line"
